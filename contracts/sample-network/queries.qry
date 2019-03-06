@@ -1,0 +1,66 @@
+/**
+ * New query file
+ */
+query validateManufacturer {
+  description: "Verifying hether the manufacturer exists or not"
+  statement:
+      SELECT com.miraclesoft.blockchain.Manufacturer
+          WHERE (email ==_$manufacturerEmail)
+}
+
+query validateOrderQuantity {
+  description: "Verifying whether quantity is available to order or not"
+  statement:
+      SELECT com.miraclesoft.blockchain.Product
+          WHERE( (availableQuantity >=_$orderQuantity) AND (productQualities.productType ==_$productType) )
+}
+
+query validateOutlet {
+  description: "Verifying hether the manufacturer exists or not"
+  statement:
+      SELECT com.miraclesoft.blockchain.Outlet
+          WHERE (email ==_$outletEmail)
+}
+query validateRetailer {
+  description: "Verifying hether the manufacturer exists or not"
+  statement:
+      SELECT com.miraclesoft.blockchain.Retailer
+          WHERE (email ==_$retailerEmail)
+}
+query validateCustomer {
+  description: "Verifying hether the manufacturer exists or not"
+  statement:
+      SELECT com.miraclesoft.blockchain.Customer
+          WHERE (email ==_$customerEmail)
+}
+query validateProduct {
+  description: "Validating if the product already exists"
+  statement:
+      SELECT com.miraclesoft.blockchain.Product
+          WHERE (productId ==_$productID)
+}
+
+query checkOrderAvailability {
+  description: "Validating if the product already exists"
+  statement:
+      SELECT com.miraclesoft.blockchain.Product
+          WHERE ((productQualities.productType ==_$productType) AND (productOwner ==_$providerName) AND (availableQuantity >=_$quantity))
+}
+
+
+query fetchOrderData{
+description: "Fetching the order details"
+statement:
+  SELECT com.miraclesoft.blockchain.Order
+         WHERE(orderId ==_$orderId)
+}          
+
+/*query checkOrderAvailabilityForEndUser{
+description: "Validating if the product is availble to order"
+statement:
+  SELECT com.miraclesoft.blockchain.Retailer
+        WHERE(availableProduct.)
+
+
+
+}*/

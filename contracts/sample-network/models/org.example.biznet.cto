@@ -1,0 +1,131 @@
+namespace com.miraclesoft.blockchain
+
+concept Address{
+  o String city	optional
+  o String state optional
+  o String country
+  o Integer pincode optional
+}
+
+/*concept soldProductDetails{
+    o String transactionID optional
+    o String manufacturer optional
+    o String owner optional
+    o String[] productSerialNo optional } */
+
+abstract participant Person identified by email{
+  o String name
+  o String email
+  o Address address
+  o Double balance
+  o String [] availableProduct 
+  o String [] soldProductDetails 
+  o String []availableProductSerialNo
+}
+
+participant Manufacturer extends Person {
+  o String companyid
+}
+participant Outlet extends Person {
+  o String outletid
+}
+participant Retailer extends Person {
+  o String retailerid
+}
+participant Customer extends Person {
+  o String customerid
+  //o String getproductDate
+}
+concept ProductQualities{
+ 	o String productType
+    o String productModel
+    o String productConfiguration optional
+}
+enum OrdererType{
+  	o CUSTOMER
+  	o RETAILER
+  	o OUTLET
+}
+enum WarrantyStatus{
+    o repairable
+    o replacable
+}
+enum OrderStatus{
+	o CREATED
+  	o IN_OUTLET
+  	o IN_TRANSITION
+  	o DELIVERED
+  	o DECLINED
+}
+enum ProductStatus{
+	o MANUFACTURED
+ 	o IN_OUTLET
+    o WITH_RETAILER
+    o WITH_CUSTOMER
+    o IN_WARRANTY
+    o MISSING
+    o DECOMMISIONED
+}
+
+asset Order identified by orderId{
+  	o String orderId
+  	o DateTime orderDate
+  	o String orderPerson
+  	o OrdererType ordererType
+  	o OrderStatus orderStatus
+	o String orderProviderName
+  	o ProductQualities productQualities
+  	o Integer orderQuantity
+    o String[] saleItemSerial
+    
+  
+}
+asset Product identified by productId{
+ 	o ProductQualities productQualities
+    o String productId
+	o String productOwner
+    o Integer warrantyPeriod
+    o Integer availableQuantity
+    o Integer totalManufacturedQuantity optional
+    o String productDescription optional
+    o String productManufacturer
+    o ProductStatus productStatus
+	o DateTime manufactureDate optional
+	o Double productPrice
+  //  o String[] transactionIds optional
+  //  o String[] orderIds optional
+  //  o String[] orderPersons optional
+    o String[] productSerialNo 
+    o String[] soldProductDetails 
+    
+}
+ 
+transaction setUpDemo{
+}
+transaction createProduct{
+	o Product product
+}
+transaction orderProduct{
+	o Order order
+}
+transaction orderProductFromRetailer{
+  o Order order
+  
+}
+/*transaction claim{
+	o Product product
+    o Order order
+    o WarrantyStatus warrantyStatus
+	o DateTime warrantyRequestDate
+	o Boolean defect
+	//o String warrantyStatus
+	o String comments	optional
+} */
+transaction getOrderInfo{
+   o Order order
+  // o String orderId
+}
+//transaction idStoreFun{
+   //o Order order 
+  //o String orderId
+//}
